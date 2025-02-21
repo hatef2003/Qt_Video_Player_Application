@@ -18,9 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->horizontalSlider_Volume->setMinimum(0);
     ui->horizontalSlider_Volume->setMaximum(100);
     ui->horizontalSlider_Volume->setValue(30);
-
-    Player->setVolume(ui->horizontalSlider_Volume->value());
-
+    QAudioOutput *audioOutput = new QAudioOutput;
+    audioOutput->setVolume(ui->horizontalSlider_Volume->value());
+    Player->setAudioOutput(audioOutput);
     connect(Player, &QMediaPlayer::durationChanged, this, &MainWindow::durationChanged);
     connect(Player, &QMediaPlayer::positionChanged, this, &MainWindow::positionChanged);
 
@@ -74,7 +74,7 @@ void MainWindow::on_actionOpen_triggered()
 
     Player->setVideoOutput(Video);
 
-    Player->setMedia(QUrl(FileName));
+    Player->setSource(QUrl(FileName));
 
     Video->setVisible(true);
 
@@ -117,20 +117,22 @@ void MainWindow::on_pushButton_Volume_clicked()
     {
         IS_Muted = true;
         ui->pushButton_Volume->setIcon(style()->standardIcon(QStyle::SP_MediaVolumeMuted));
-        Player->setMuted(true);
+        Player->audioOutput()->setMuted(true);
     }
     else
     {
         IS_Muted = false;
         ui->pushButton_Volume->setIcon(style()->standardIcon(QStyle::SP_MediaVolume));
-        Player->setMuted(false);
+        Player->audioOutput()->setMuted(false);
     }
 }
 
 
 void MainWindow::on_horizontalSlider_Volume_valueChanged(int value)
 {
-    Player->setVolume(value);
+    QAudioOutput *audioOutput = new QAudioOutput;
+    audioOutput->setVolume(value);
+    Player->setAudioOutput(audioOutput);
 }
 
 
