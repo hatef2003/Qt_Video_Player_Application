@@ -10,14 +10,21 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    webrtccontroller.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    webrtccontroller.h
 
 FORMS += \
     mainwindow.ui
 
+INCLUDEPATH += C:/Users/Hot-f/Desktop/Qt_Video_Player_Application/Qt_Video_Player_Application/LIB/libdatachannel/include
+LIBS += -LC:/Users/Hot-f/Desktop/Qt_Video_Player_Application/Qt_Video_Player_Application/LIB/libdatachannel/Windows/Mingw64 -ldatachannel.dll
+LIBS += -LD:\Qt/Tools/OpenSSLv3/Win_x64/bin -lcrypto-3-x64 -lssl-3-x64
+LIBS += -lws2_32
+LIBS += -lssp
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
